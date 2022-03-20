@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beat my world</title>
+    <style>
+        h3 {
+
+            color: black;
+            font-family: sans-serif;
+            font-size: 32px;
+            background-color: #4287f5;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        h4 {
+            font-weight: normal;
+            font-size: 20px;
+            margin-top: 50px;
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 8px;
+            background-color: #4287f5;
+            border: none;
+            color: white;
+            font-size: x-small;
+            box-shadow: 2px 2px #565454;
+            cursor: pointer;
+        }
+
+        p {
+            color: #797676;
+            margin-top: 5px;
+        }
+
+        #random-word {
+            text-transform: uppercase;
+        }
+
+        .tab {
+            font-size: small;
+            border: 1px solid #19c6fc;
+            width: 300px;
+            padding: 8px 8px;
+            border-radius: 4px;
+            box-shadow: 2px 2px 2px 0 lightblue;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+<div class="wrapper">
+    <h3>Beat my Word</h3>
+    <h4> Choose Difficulty </h4>
+
+    <div>
+        <button onclick="easy()">easy</button>
+        <button onclick="medium()">medium</button>
+        <button onclick="hard()">hard</button>
+        <p> Type The Given Word Within <span style="color: green">10 </span>
+            Seconds</p>
+    </div>
+    <div>
+        <h4 id="random-word">
+            SOME WORDS
+        </h4>
+    </div>
+    <div style="margin-bottom: 15px">
+        <input class="tab" placeholder="Start typing..." id="input-text">
+
+    </div>
+    <div style="display: flex;justify-content: space-between">
+        <div>
+
+        <span>
+            Score:
+        </span>
+            <span id="score">
+            1
+        </span>
+
+        </div>
+        <div>
+
+        <span>
+            Time left:
+        </span>
+            <span id="timer">
+            10
+        </span>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    let score = 0;
+    let word = "";
+    let level = "easy";
+    let sec = 0;
+
+    function start() {
+        timeLeft();
+    }
+
+    function easy() {
+        level = "easy";
+        score = 0;
+        generateNextWord()
+        start()
+
+    }
+
+    function medium() {
+        level = "medium";
+        score = 0;
+        generateNextWord()
+
+        start()
+    }
+
+    function hard() {
+        level = "hard";
+        score = 0
+
+        generateNextWord()
+        start()
+    }
+
+    function generateNextWord() {
+        if (level === "easy") {
+            let easy_word_list = [
+                "Doing",
+                "Hello",
+                "put",
+                "input",
+                "begin",
+                "art",
+                'lazy',
+                'fancy',
+                'nice',
+                'fit',
+                'eager',
+
+
+            ];
+            word = easy_word_list[Math.floor(Math.random() * easy_word_list.length)]
+
+        } else if (level === "medium") {
+            let medium_word_list = [
+                "abundant",
+                "awesome",
+                "easter",
+                "humorous",
+                "island",
+                "borrow",
+                'camera',
+                'common',
+                'handsome',
+                'massive',
+
+
+            ];
+            word = medium_word_list[Math.floor(Math.random() * medium_word_list.length)]
+        } else if (level === "hard") {
+            let hard_word_list = [
+                'CARELESS',
+                'YOUTHFUL',
+                'DEVELOP',
+                'CHARACTER',
+                'ELEMENTS',
+                'INCLINE',
+
+            ];
+            word = hard_word_list[Math.floor(Math.random() * hard_word_list.length)]
+        }
+        word = word.toUpperCase();
+        const randomElement = document.getElementById('random-word');
+        randomElement.innerHTML = word;
+        sec=10;
+        document.getElementById("timer").innerHTML = sec;
+
+    }
+
+    function timeLeft() {
+        interval_id = setInterval(() => {
+            sec--;
+            if (sec <= 0){
+                clearInterval(interval_id)
+            }else {
+                document.getElementById("timer").innerHTML = sec;
+            }
+
+        }, 1000);
+    }
+
+    function showScore() {
+        const scoreElement = document.querySelector('#score');
+        scoreElement.innerHTML = score;
+    }
+
+    showScore()
+    const selectElement = document.querySelector('#input-text');
+
+
+    selectElement.addEventListener('keyup', (event) => {
+        console.log(event.target.value)
+        console.log("word", word)
+        if (word === event.target.value) {
+            score++;
+            selectElement.value = ""
+            generateNextWord();
+            showScore()
+
+        }
+
+
+    })
+
+</script>
+</body>
+</html>

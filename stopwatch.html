@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><title>demo JS</title>
+    <style>h1, h2 {
+
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        text-transform: uppercase;
+        font-size: 38px;
+        font-weight: 100;
+    }
+
+    #seconds, #tens {
+        font-size: 32px
+    }
+
+    .wrapper {
+        color: white;
+        text-align: center;
+        margin: auto;
+        font-family: sans-serif;
+
+    }
+
+    button {
+        border: solid 1px white;
+        background-color: orange;
+        border-radius: 5px;
+        padding: 10px 12px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 180px;
+        height: 60px;
+        color: white;
+        margin: 10px;
+    }
+
+
+    button:hover {
+        transition: all 0.5s;
+        background: white;
+        color: orange;
+        border: 1px solid white;
+    }
+
+    body {
+        background-color: orange;
+        height: 100%;
+    }
+    </style>
+</head>
+<script>
+    let tens = 0;
+    let sec = 0;
+    let interval_id;
+    let timer = false;
+
+    function start() {
+        timer = true;
+        stopwatch();
+    }
+
+    function stop() {
+        timer = false;
+        if (interval_id) {
+            clearInterval(interval_id)
+            interval_id = undefined;
+        }
+
+    }
+
+    function reset() {
+        tens = 0;
+        sec = 0;
+        document.getElementById("tens").innerHTML ="00" ;
+        document.getElementById("seconds").innerHTML ="00";
+        stop()
+
+    }
+
+    function stopwatch() {
+
+        interval_id = setInterval(() => {
+            sec += 1;
+            if (sec >100 ) {
+                sec= 0;
+            tens += 1
+            }
+
+            document.getElementById("tens").innerHTML = sec;
+            document.getElementById("seconds").innerHTML = tens;
+        }, 0);
+
+    }
+
+</script>
+<body>
+<div class="wrapper">
+    <h1>STOPWATCH</h1>
+    <h2> VANILLA JAVASCRIPT STOPWATCH</h2>
+    <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <button onclick="reset()">Reset</button>
+</div>
+
+</body>
+</html>
